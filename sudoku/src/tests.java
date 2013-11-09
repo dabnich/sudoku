@@ -25,6 +25,17 @@ public class tests {
 		assertEquals(area.col[0].missingSize, 6);
 	}
 	
+	@Test
+	public void areaMissing(){
+		setData();
+		area area = new area(data);
+		area.updateMissing();
+		for(int i=0; i<area.row[4].grid[6].missingSize; i++){
+			System.out.print(area.row[4].grid[6].missing[i]+"\n");
+		}
+		assertEquals(area.row[4].grid[6].missingSize, 3);
+	}
+	
 	void setData(){
 		data[0] = new int[] {1,7,4,0,0,2,0,3,0};
 		data[1] = new int[] {0,0,2,0,6,0,0,1,0};

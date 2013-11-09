@@ -1,7 +1,7 @@
 public class col {
 	grid[] grid = new grid[Constants.maxRows];
-	int[] missing = new int[9];
-	int missingSize = 9;
+	int[] missing = new int[Constants.maxRows];
+	int missingSize = Constants.maxRows;
 	public col(grid grid[]){
 		this.grid = grid;
 	}

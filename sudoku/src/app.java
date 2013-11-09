@@ -18,6 +18,7 @@ public class app {
 		data[8] = new int[] {0,1,0,2,0,0,6,8,4};
 		//data = createValues();
 		area area = new area(data);
+		area.updateMissing();
 		System.out.print(area.box[4].grid[5].value);
 	}
 	

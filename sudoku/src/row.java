@@ -1,8 +1,8 @@
 
 public class row {
 	grid[] grid = new grid[Constants.maxCols];
-	int[] missing = new int[9];
-	int missingSize = 9;
+	int[] missing = new int[Constants.maxCols];
+	int missingSize = Constants.maxCols;
 	public row(grid grid[]){
 		this.grid = grid;
 	}
