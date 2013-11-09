@@ -31,9 +31,28 @@ public class tests {
 		area area = new area(data);
 		area.updateMissing();
 		for(int i=0; i<area.row[4].grid[6].missingSize; i++){
-			System.out.print(area.row[4].grid[6].missing[i]+"\n");
+			//System.out.print(area.row[4].grid[6].missing[i]+"\n");
 		}
 		assertEquals(area.row[4].grid[6].missingSize, 3);
+	}
+	
+	@Test
+	public void completeRow(){
+		setData();
+		area area = new area(data);
+		area.updateMissing();
+		for(int i=0; i<Constants.maxCols; i++){
+			System.out.print(area.row[2].grid[i].value+"\t");
+		}
+		System.out.print("\n");
+		assertEquals(area.row[2].complete(), true);
+		//assertEquals(area.row[6].grid[1].value, 2);
+		
+		
+		for(int i=0; i<Constants.maxCols; i++){
+			System.out.print(area.row[2].grid[i].value+"\t");
+		}
+		
 	}
 	
 	void setData(){

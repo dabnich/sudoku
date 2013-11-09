@@ -31,6 +31,17 @@ public class grid {
 		this.y = y;
 	}
 	
+	public void setValue(int value){
+		if(value>0){
+			for(int i=0; i<Constants.maxRows*3; i++){
+				missing[i] = 0;
+			}
+			missingSize = 0;
+			empty = false;
+			this.value = value;
+		}
+	}
+	
 	public void updateMissing(){
 		for(int i=0; i<Constants.maxRows*3-1; i++){
 			while(inArray(missing[i])){
