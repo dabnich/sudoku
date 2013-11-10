@@ -12,6 +12,9 @@ public class tests {
 		area area = new area(data);
 		assertEquals(area.row[8].grid[8].value, area.box[8].grid[8].value);
 		assertEquals(area.row[3].grid[8].value, area.col[8].grid[3].value);
+		assertEquals(area.box[2].grid[0].empty, true);
+		assertEquals(area.box[2].grid[1].empty, false);
+		assertEquals(area.box[2].grid[0].empty, true);
 	}
 	
 	@Test
@@ -22,7 +25,68 @@ public class tests {
 		assertEquals(area.row[6].missingSize, 7);
 		assertEquals(area.row[0].missing[0], 5);
 		assertEquals(area.row[5].missing[area.row[5].missingSize-1], 9);
+		assertEquals(area.row[0].missingSize, 4);
+		assertEquals(area.row[1].missingSize, 6);
+		assertEquals(area.row[2].missingSize, 7);
+		assertEquals(area.row[3].missingSize, 8);
+		assertEquals(area.row[4].missingSize, 5);
+		assertEquals(area.row[5].missingSize, 8);
+		assertEquals(area.row[6].missingSize, 7);
+		assertEquals(area.row[7].missingSize, 6);
+		assertEquals(area.row[8].missingSize, 4);
 		assertEquals(area.col[0].missingSize, 6);
+		assertEquals(area.col[1].missingSize, 5);
+		assertEquals(area.col[2].missingSize, 7);
+		assertEquals(area.col[3].missingSize, 6);
+		assertEquals(area.col[4].missingSize, 7);
+		assertEquals(area.col[5].missingSize, 6);
+		assertEquals(area.col[6].missingSize, 7);
+		assertEquals(area.col[7].missingSize, 5);
+		assertEquals(area.col[8].missingSize, 6);
+		assertEquals(area.box[0].missingSize, 4);
+		assertEquals(area.box[1].missingSize, 6);
+		assertEquals(area.box[2].missingSize, 7);
+		assertEquals(area.box[3].missingSize, 7);
+		assertEquals(area.box[4].missingSize, 7);
+		assertEquals(area.box[5].missingSize, 7);
+		assertEquals(area.box[6].missingSize, 7);
+		assertEquals(area.box[7].missingSize, 6);
+		assertEquals(area.box[8].missingSize, 4);
+	}
+	
+	@Test public void numBox(){
+		setData();
+		area area = new area(data);
+		
+		assertEquals(area.numBox(3, 6), 5);
+		assertEquals(area.numBox(8, 6), 8);
+		
+		assertEquals(area.numInBox(6, 6), 0);
+		assertEquals(area.numInBox(1, 7), 4);
+		
+		
+	}
+	
+	
+	@Test
+	public void gridMissing(){
+		setData();
+		area area = new area(data);
+		area.updateMissing();
+		assertEquals(area.row[0].grid[3].missingSize, 2);
+		assertEquals(area.row[0].grid[4].missingSize, 3);
+		assertEquals(area.row[0].grid[6].missingSize, 2);
+		assertEquals(area.row[0].grid[8].missingSize, 4);
+		assertEquals(area.row[2].grid[1].missingSize, 1);
+		assertEquals(area.row[0].grid[8].missing[0], 5);
+		
+		assertEquals(area.col[0].grid[1].missingSize, 4);
+		assertEquals(area.col[0].grid[1].missing[0], 3);
+		assertEquals(area.col[6].grid[2].missingSize, 5);
+		assertEquals(area.col[6].grid[2].missing[2], 7);
+		
+		assertEquals(area.box[0].grid[3].missingSize, 4);
+		
 	}
 	
 	@Test
@@ -30,29 +94,32 @@ public class tests {
 		setData();
 		area area = new area(data);
 		area.updateMissing();
-		for(int i=0; i<area.row[4].grid[6].missingSize; i++){
-			//System.out.print(area.row[4].grid[6].missing[i]+"\n");
-		}
 		assertEquals(area.row[4].grid[6].missingSize, 3);
 	}
 	
-	@Test
+	
 	public void completeRow(){
 		setData();
 		area area = new area(data);
 		area.updateMissing();
-		for(int i=0; i<Constants.maxCols; i++){
-			System.out.print(area.row[2].grid[i].value+"\t");
-		}
-		System.out.print("\n");
 		assertEquals(area.row[2].complete(), true);
-		//assertEquals(area.row[6].grid[1].value, 2);
-		
-		
-		for(int i=0; i<Constants.maxCols; i++){
-			System.out.print(area.row[2].grid[i].value+"\t");
+	}
+	
+	@Test
+	public void completeBox(){
+		setData();
+		area area = new area(data);
+		area.updateMissing();
+		assertEquals(area.box[1].grid[7].value, 0);
+		assertEquals(area.box[1].complete(), true);
+		assertEquals(area.box[1].grid[7].value, 1);
+	}
+	
+	private boolean inArray(int value, int array[]){
+		for(int i=0; i<array.length; i++){
+			if(value==array[i]) return true;
 		}
-		
+		return false;
 	}
 	
 	void setData(){

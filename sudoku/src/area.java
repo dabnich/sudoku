@@ -80,14 +80,14 @@ public class area {
 		}
 	}
 	
-	private int numBox(int row, int col){
+	public int numBox(int row, int col){
 		return (int)(col/3)+(int)(row/3)*3;
 	}
 	
-	private int numInBox(int row, int col){
+	public int numInBox(int row, int col){
 		int rowStart = (int)(row/3)*3;
 		int colStart = (int)(col/3)*3;
-		return col-colStart+(int)((row-rowStart)/3)*3;
+		return col-colStart+(row-rowStart)*3;
 	}
 	
 	
