@@ -1,28 +1,31 @@
 
 public class row {
-	grid[] grid = new grid[Constants.maxCols];
-	int[] missing = new int[Constants.maxCols];
-	int missingSize = Constants.maxCols;
+	grid[] grid = new grid[Constants.maxBoxes];
+	int[] missing = new int[Constants.maxRows];
+	int missingSize = 9;
 	public row(grid grid[]){
 		this.grid = grid;
 	}
 	
-	public row(){
-		for(int i=0; i<Constants.maxCols; i++){
-			this.grid[i] = new grid();
-		}
-		updateMissing();
-	};
-	
 	public row(int value[]){
-		for(int i=0; i<Constants.maxCols; i++){
+		for(int i=0; i<Constants.maxBoxes; i++){
 			this.grid[i] = new grid(value[i]);
 		}
 		updateMissing();
 	}
 	
+	public void setGrid(int value, int index){
+		grid[index].setValue(value);
+		updateMissing();
+	}
+	
+	public int getGrid(int index){
+		return grid[index].value;
+	}
+	
 	void updateMissing(){
 		int n=0;
+		for(int i=0; i<9; i++) missing[i]=0;
 		for(int no=Constants.minValue; no<=Constants.maxValue; no++){
 			if(!inArray(no)) {
 				missing[n] = no;
@@ -32,10 +35,18 @@ public class row {
 		missingSize = n;
 	}
 	
-	public boolean complete(){
+	
+	public int complete(){
 		int sum=0;
 		for(int i=0; i<Constants.maxCols; i++){
-			sum+=grid[i].missingSize;
+			if(grid[i].missingSize==1 && grid[i].empty) {
+				setGrid(grid[i].missing[0], i);
+				updateMissing();
+				return i;
+			}
+		}
+		for(int i=0; i<Constants.maxCols; i++){
+			sum += grid[i].missingSize;
 		}
 		int[] missingAll = new int[sum];
 		int a=0;
@@ -57,13 +68,13 @@ public class row {
 		if(complete!=0){
 			for(int i=0; i<Constants.maxCols; i++){
 				if(inArray(complete, grid[i].missing)){
-					grid[i].setValue(complete);
+					setGrid(complete, i);
 					updateMissing();
-					return true;
+					return i;
 				}
 			}
 		}
-		return false;
+		return -1;
 	}
 	
 	private int numValue(int value, int array[]){
@@ -74,13 +85,7 @@ public class row {
 		return a;
 	}
 	
-	private boolean inArray(int value){
-		for(int i=0; i<grid.length; i++){
-			if(value==grid[i].value) return true;
-		}
-		return false;
-	}
-	
+
 	private boolean inArray(int value, int array[]){
 		for(int i=0; i<array.length; i++){
 			if(value==array[i]) return true;
@@ -88,4 +93,11 @@ public class row {
 		return false;
 	}
 	
+	
+	private boolean inArray(int value){
+		for(int i=0; i<grid.length; i++){
+			if(value==grid[i].value) return true;
+		}
+		return false;
+	}
 }

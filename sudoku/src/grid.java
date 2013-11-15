@@ -42,22 +42,13 @@ public class grid {
 		}
 	}
 	
-	public void updateMissing(){
-		for(int i=0; i<Constants.maxRows*3-1; i++){
-			while(inArray(missing[i])){
-				missing[i]=0;
-			}
-		}
-		sort();
-		int a=0;
-		for(int i=Constants.maxRows*3-1; i>=0; i--){
-			if(missing[i]>0) a++;
-		}
-		missingSize = missingSize-a;
-	}
+
 	
 	public void checkMissing(){
 		int[] tmpMissing = new int[Constants.maxRows*3];
+		for(int i=0; i<Constants.maxRows*3; i++){
+			tmpMissing[i]=0;
+		}
 		int a = 0;
 		for(int no=Constants.minValue; no<=Constants.maxValue; no++){
 			int n=0;
@@ -73,24 +64,8 @@ public class grid {
 		missing = tmpMissing;
 	}
 	
-	private void sort(){
-		for(int n=0; n<missing.length; n++){
-			for(int i=0; i<missing.length-1-n; i++){
-				if(missing[i]>missing[i+1] || missing[i]==0){
-					int tmp = missing[i];
-					missing[i]=missing[i+1];
-					missing[i+1] = tmp;
-				}
-			}
-		}
-	}
-	
-	private boolean inArray(int value){
-		for(int i=0; i<missing.length; i++){
-			if(value==missing[i] && value!=0) return true;
-		}
-		return false;
-	}
+
+
 	
 	public void setX(int x){
 		this.x = x;

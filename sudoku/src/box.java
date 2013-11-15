@@ -1,6 +1,6 @@
 public class box {
 	grid[] grid = new grid[Constants.maxBoxes];
-	int[] missing = new int[9];
+	int[] missing = new int[Constants.maxRows];
 	int missingSize = 9;
 	public box(grid grid[]){
 		this.grid = grid;
@@ -13,8 +13,18 @@ public class box {
 		updateMissing();
 	}
 	
+	public void setGrid(int value, int index){
+		grid[index].setValue(value);
+		updateMissing();
+	}
+	
+	public int getGrid(int index){
+		return grid[index].value;
+	}
+	
 	void updateMissing(){
 		int n=0;
+		for(int i=0; i<9; i++) missing[i]=0;
 		for(int no=Constants.minValue; no<=Constants.maxValue; no++){
 			if(!inArray(no)) {
 				missing[n] = no;
@@ -25,14 +35,21 @@ public class box {
 	}
 	
 	
-	public boolean complete(){
+	public int complete(){
 		int sum=0;
-		for(int i=0; i<Constants.maxBoxes; i++){
-			sum+=grid[i].missingSize;
+		for(int i=0; i<Constants.maxCols; i++){
+			if(grid[i].missingSize==1 && grid[i].empty) {
+				setGrid(grid[i].missing[0], i);
+				updateMissing();
+				return i;
+			}
+		}
+		for(int i=0; i<Constants.maxCols; i++){
+			sum += grid[i].missingSize;
 		}
 		int[] missingAll = new int[sum];
 		int a=0;
-		for(int n=0; n<Constants.maxBoxes; n++){
+		for(int n=0; n<Constants.maxCols; n++){
 			for(int i=0; i<grid[n].missingSize; i++){
 				if(grid[n].empty){
 					missingAll[a] = grid[n].missing[i];
@@ -48,15 +65,15 @@ public class box {
 			}
 		}
 		if(complete!=0){
-			for(int i=0; i<Constants.maxBoxes; i++){
+			for(int i=0; i<Constants.maxCols; i++){
 				if(inArray(complete, grid[i].missing)){
-					grid[i].setValue(complete);
+					setGrid(complete, i);
 					updateMissing();
-					return true;
+					return i;
 				}
 			}
 		}
-		return false;
+		return -1;
 	}
 	
 	private int numValue(int value, int array[]){
