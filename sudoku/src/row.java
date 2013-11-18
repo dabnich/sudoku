@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 
 public class row {
 	grid[] grid = new grid[Constants.maxBoxes];
@@ -34,7 +36,6 @@ public class row {
 		}
 		missingSize = n;
 	}
-	
 	
 	public int complete(){
 		int sum=0;
@@ -77,12 +78,64 @@ public class row {
 		return -1;
 	}
 	
+	public int completePair(){
+		if(missingSize>=3){
+			ArrayList<String[]> pair = new ArrayList<String[]> ();
+			for(int g=0; g<Constants.maxCols; g++){
+				if(grid[g].empty){
+					for(int m=0; m<grid[g].missingSize-1; m++){
+						for(int i=m+1; i<grid[g].missingSize; i++){
+							pair.add(new String[] {Integer.toString(grid[g].missing[m])+grid[g].missing[i], Integer.toString(g)});
+						}
+					}
+				}
+			}
+			for(int i=0; i<pair.size(); i++){
+				int[] index = isPair(pair);
+				if(index[0] != -1){
+					grid[index[0]].setTmpValue(index[2]);
+					grid[index[1]].setTmpValue(index[3]);
+					updateMissing();
+					int complete = complete();
+					grid[index[0]].setTmpValue(0);
+					grid[index[1]].setTmpValue(0);
+					updateMissing();
+					if(complete != -1) return complete;
+				}
+			}
+		}
+		return -1;
+	}
+	
 	private int numValue(int value, int array[]){
 		int a=0;
 		for(int i=0; i<array.length; i++){
 			if(value==array[i]) a++;
 		}
 		return a;
+	}
+	
+	private int[] isPair(ArrayList<String[]> all){
+		for(int i=0; i<all.size(); i++){
+			int a=0;
+			int tmpN = -1;
+			for(int n=0; n<all.size(); n++){
+				if(all.get(n)[0]==all.get(i)[0]){
+					tmpN=n;
+					a++;
+				}
+			}
+			if(a==2){
+				String num1 = Character.toString(all.get(i)[0].charAt(0));
+				String num2 = Character.toString(all.get(i)[0].charAt(1));
+				return new int[] {Integer.parseInt(all.get(i)[1]),
+								  Integer.parseInt(all.get(tmpN)[1]), 
+								  Integer.parseInt(num1), 
+								  Integer.parseInt(num2)
+								 };
+			}
+		}
+		return new int[] {-1, -1, -1, -1};
 	}
 	
 

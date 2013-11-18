@@ -1,12 +1,19 @@
 import java.util.Random;
+import java.io.*;
 
 public class app {
 
 	/**
 	 * @param args
 	 */
+	
+
+	
+	
 	public static void main(String[] args) {
 		int[][] data = new int[Constants.maxRows][Constants.maxCols];
+		data = new reader("file.txt").toArray();
+		
 		
 		/*
 		data[0] = new int[] {0,3,0,0,8,0,6,0,0};
@@ -18,7 +25,7 @@ public class app {
 		data[6] = new int[] {2,0,0,0,0,0,5,0,0};
 		data[7] = new int[] {0,0,0,1,0,9,0,2,6};
 		data[8] = new int[] {0,0,9,0,2,0,0,7,0};
-		*/
+		
 		
 		data[0] = new int[] {0,0,0,3,5,8,2,0,0};
 		data[1] = new int[] {5,0,2,0,0,7,0,0,0};
@@ -29,15 +36,17 @@ public class app {
 		data[6] = new int[] {3,0,0,0,0,0,0,0,9};
 		data[7] = new int[] {0,0,0,7,0,0,6,0,8};
 		data[8] = new int[] {0,0,4,9,2,1,0,0,0};
-		
-		//data = createValues();
+		*/
 		area area = new area(data);
 		area.complete();
 		area.drawTable();
 	}
 	
 	
-	
+
+
+
+
 	static int[][] createValues(){
 		int[][] data = new int[Constants.maxRows][Constants.maxCols];
 		Random rand;

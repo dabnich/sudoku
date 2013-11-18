@@ -40,8 +40,23 @@ public class grid {
 			empty = false;
 			this.value = value;
 		}
+		else{
+			this.value = 0;
+			missingSize = 9;
+			empty = true;
+		}
 	}
 	
+	public void setTmpValue(int value){
+		if(value>0){
+			empty = false;
+			this.value = value;
+		}
+		else{
+			empty = true;
+			this.value = 0;
+		}
+	}
 
 	
 	public void checkMissing(){

@@ -98,6 +98,9 @@ public class area {
 		int c=-1;
 		if(row[r].missingSize>0){
 			c = row[r].complete();
+			if(c == -1){
+				c = row[r].completePair();
+			}
 			if(c != -1){
 				col[c].setGrid(row[r].getGrid(c), r);
 				box[numBox(r,c)].setGrid(row[r].getGrid(c), numInBox(r, c));
@@ -116,6 +119,9 @@ public class area {
 		int g=-1;
 		if(box[b].missingSize>0){
 			g = box[b].complete();
+			if(g == -1){
+				g = box[b].completePair();
+			}
 			if(g != -1){
 				row[rowBox(b,g)].setGrid(box[b].getGrid(g), colBox(b,g) );
 				col[colBox(b,g)].setGrid( box[b].getGrid(g), rowBox(b,g) );
@@ -134,6 +140,9 @@ public class area {
 		int r=-1;
 		if(col[c].missingSize>0){
 			r = col[c].complete();
+			if(r == -1){
+				r = col[c].completePair();
+			}
 			if(r != -1){
 				row[r].setGrid(col[c].getGrid(r), c);
 				box[numBox(r,c)].setGrid(col[c].getGrid(r), numInBox(r, c));
